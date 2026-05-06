@@ -1,65 +1,112 @@
-import Image from "next/image";
+import type { Metadata } from 'next';
+import HeroSection from '@/components/home/HeroSection';
+import FeaturedPosts from '@/components/home/FeaturedPosts';
+import NewsletterBanner from '@/components/home/NewsletterBanner';
+import Link from 'next/link';
 
-export default function Home() {
+export const metadata: Metadata = {
+  title: 'Nilceia Eulampio — Escritora, Poetisa e Voz Espiritual',
+  description:
+    'Reflexões sobre espiritualidade, cura emocional, contos e justiça social. Textos que tocam a alma por Nilceia Eulampio.',
+};
+
+const categories = [
+  { icon: '🕊️', label: 'Espiritualidade', href: '/blog?cat=Espiritualidade', desc: 'Fé, oração e experiências sagradas' },
+  { icon: '💚', label: 'Cura Emocional', href: '/blog?cat=Cura+Emocional', desc: 'Luto, trauma e recomeços' },
+  { icon: '📖', label: 'Contos', href: '/blog?cat=Contos', desc: 'Narrativas que ensinam e encantam' },
+  { icon: '✊', label: 'Justiça Social', href: '/blog?cat=Justiça+Social', desc: 'Vozes que precisam ser ouvidas' },
+];
+
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <style>{`
+        .cat-card { 
+          display: flex; flex-direction: column; gap: 0.5rem; padding: 1.5rem;
+          background-color: var(--bg-card); border-radius: var(--radius-md);
+          border: 1px solid rgba(184,134,11,0.1); box-shadow: var(--shadow-sm);
+          transition: all 0.25s; text-decoration: none;
+        }
+        .cat-card:hover {
+          border-color: rgba(184,134,11,0.35); transform: translateY(-3px); box-shadow: var(--shadow-md);
+        }
+        .apoio-btn {
+          display: inline-block; padding: 0.875rem 2.5rem;
+          background-color: var(--accent-green); color: #fff;
+          border-radius: var(--radius-sm); font-weight: 700; font-size: 1rem;
+          font-family: var(--font-body);
+          box-shadow: 0 4px 16px rgba(107,142,111,0.35); transition: all 0.2s;
+        }
+        .apoio-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(107,142,111,0.45); }
+      `}</style>
+
+      <HeroSection />
+
+      {/* Category pills section */}
+      <section
+        aria-labelledby="categories-heading"
+        style={{ padding: '3rem 1.5rem', backgroundColor: 'var(--bg-muted)' }}
+      >
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <h2
+            id="categories-heading"
+            className="font-heading"
+            style={{ fontSize: '1.5rem', textAlign: 'center', color: 'var(--text-primary)', marginBottom: '2rem' }}
+          >
+            Explore por tema
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '1rem' }}>
+            {categories.map((cat) => (
+              <Link key={cat.label} href={cat.href} className="cat-card">
+                <span style={{ fontSize: '1.75rem' }} aria-hidden="true">{cat.icon}</span>
+                <span className="font-heading" style={{ fontSize: '1.0625rem', fontWeight: 600, color: 'var(--text-primary)' }}>{cat.label}</span>
+                <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}>{cat.desc}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <FeaturedPosts />
+
+      {/* Quote section */}
+      <section
+        style={{
+          padding: '5rem 1.5rem',
+          background: 'linear-gradient(180deg, var(--bg-muted) 0%, var(--bg-main) 100%)',
+          textAlign: 'center',
+        }}
+        aria-label="Citação em destaque"
+      >
+        <div style={{ maxWidth: '680px', margin: '0 auto' }}>
+          <div className="divider-ornament" style={{ marginBottom: '2rem' }}>
+            <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.75rem', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Palavra do dia</span>
+          </div>
+          <blockquote className="font-heading" style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', fontStyle: 'italic', color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>
+            &ldquo;Escrever é um ato de coragem. Publicar é um ato de fé. Tocar alguém é graça.&rdquo;
+          </blockquote>
+          <footer style={{ marginTop: '1.5rem', fontSize: '0.875rem', color: 'var(--accent-gold)', fontFamily: 'var(--font-body)', fontWeight: 600 }}>
+            — Nilceia Eulampio
+          </footer>
+        </div>
+      </section>
+
+      <NewsletterBanner />
+
+      {/* Apoio CTA */}
+      <section style={{ padding: '4rem 1.5rem', textAlign: 'center' }} aria-labelledby="apoio-heading">
+        <div style={{ maxWidth: '560px', margin: '0 auto' }}>
+          <h2 id="apoio-heading" className="font-heading" style={{ fontSize: '1.75rem', marginBottom: '1rem', color: 'var(--text-primary)' }}>
+            Este trabalho vive do seu apoio 💛
+          </h2>
+          <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem', lineHeight: 1.7 }}>
+            Se algum texto tocou sua vida, considere apoiar este projeto. Cada contribuição mantém a escrita viva e gratuita.
           </p>
+          <Link href="/apoie" id="home-apoio-btn" className="apoio-btn">
+            Apoiar este trabalho 🌱
+          </Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+    </>
   );
 }
