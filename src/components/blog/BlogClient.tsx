@@ -14,21 +14,24 @@ export default function BlogClient({ initialPosts = [] }: BlogClientProps) {
   const [search, setSearch] = useState('');
 
   const filtered = useMemo(() => {
-    let posts = initialPosts;
+    // Filtro defensivo: garante que posts com dados incompletos não causem hydration mismatch
+    let posts = initialPosts.filter((p) => p.title && p.slug?.current);
     if (selected !== 'Todos') {
       posts = posts.filter((p) => p.category === selected);
     }
     if (search.trim()) {
       const q = search.toLowerCase();
       posts = posts.filter(
-        (p) => p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q)
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          (p.excerpt ?? '').toLowerCase().includes(q)
       );
     }
     return posts;
   }, [selected, search, initialPosts]);
 
   return (
-    <>
+    <div suppressHydrationWarning>
       {/* Search */}
       <div style={{ position: 'relative', maxWidth: '420px', margin: '0 auto' }}>
         <span
@@ -86,6 +89,6 @@ export default function BlogClient({ initialPosts = [] }: BlogClientProps) {
           </p>
         </div>
       )}
-    </>
+    </div>
   );
 }

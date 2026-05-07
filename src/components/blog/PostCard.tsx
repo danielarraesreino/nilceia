@@ -139,7 +139,7 @@ export default function PostCard({ post, featured = false }: PostCardProps) {
             overflow: 'hidden',
           }}
         >
-          {excerpt}
+          {excerpt?.trim() || ''}
         </p>
 
         {/* CTA */}
