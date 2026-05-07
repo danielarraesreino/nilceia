@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createClient } from '@sanity/client';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const sanityWriteClient = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? '',
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
@@ -57,6 +55,7 @@ export async function POST(req: Request) {
     // ── 3. Enviar e-mail de boas-vindas via Resend ────────────────────
     const resendApiKey = process.env.RESEND_API_KEY;
     if (resendApiKey && resendApiKey.trim() !== '') {
+      const resend = new Resend(resendApiKey);
       await resend.emails.send({
         from: 'Nilceia Eulampio <no-reply@nilceia.com.br>',
         to: normalizedEmail,
