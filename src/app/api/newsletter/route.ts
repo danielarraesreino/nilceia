@@ -12,12 +12,26 @@ const sanityWriteClient = createClient({
 
 export async function POST(req: Request) {
   try {
-    let body: { email?: unknown; source?: unknown };
+    let body: { email?: string; source?: string } = {};
+    const contentType = req.headers.get('content-type') || '';
+
     try {
-      body = await req.json();
-    } catch {
+      if (contentType.includes('application/json')) {
+        body = await req.json();
+      } else if (contentType.includes('application/x-www-form-urlencoded') || contentType.includes('multipart/form-data')) {
+        const formData = await req.formData();
+        body = {
+          email: formData.get('email') as string,
+          source: formData.get('source') as string,
+        };
+      } else {
+        // Tentar JSON como fallback
+        body = await req.json();
+      }
+    } catch (err) {
+      console.error('[Newsletter API] Error parsing body:', err);
       return NextResponse.json(
-        { message: 'Requisição inválida. Envie um JSON com o campo "email".' },
+        { message: 'Requisição inválida. Envie os dados corretamente.' },
         { status: 400 }
       );
     }

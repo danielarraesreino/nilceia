@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import FooterNewsletterForm from './FooterNewsletterForm';
 
 const socialLinks = [
   { label: 'Instagram', href: 'https://instagram.com', icon: '📷' },
@@ -53,47 +54,7 @@ export default function Footer() {
           <p style={{ color: 'rgba(245,239,230,0.75)', marginBottom: '1.5rem', fontSize: '0.9375rem' }}>
             Junte-se a centenas de leitores que recebem textos que tocam a alma direto no e-mail.
           </p>
-          <form
-            id="footer-newsletter-form"
-            action="/api/newsletter"
-            method="POST"
-            style={{ display: 'flex', gap: '0.75rem', maxWidth: '420px', margin: '0 auto', flexWrap: 'wrap', justifyContent: 'center' }}
-          >
-            <input
-              type="email"
-              name="email"
-              id="footer-email"
-              placeholder="seu@email.com"
-              required
-              aria-label="Seu endereço de e-mail"
-              style={{
-                flex: '1 1 220px',
-                padding: '0.75rem 1rem',
-                borderRadius: 'var(--radius-sm)',
-                border: '1px solid rgba(184,134,11,0.3)',
-                backgroundColor: 'rgba(255,255,255,0.08)',
-                color: '#FDF9F3',
-                fontSize: '0.9375rem',
-                outline: 'none',
-              }}
-            />
-            <button
-              type="submit"
-              style={{
-                padding: '0.75rem 1.5rem',
-                backgroundColor: 'var(--accent-gold)',
-                color: '#fff',
-                borderRadius: 'var(--radius-sm)',
-                border: 'none',
-                fontWeight: 700,
-                fontSize: '0.9375rem',
-                cursor: 'pointer',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              Quero receber ✨
-            </button>
-          </form>
+          <FooterNewsletterForm />
         </div>
 
         {/* 3-column grid */}
