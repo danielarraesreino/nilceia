@@ -1,5 +1,6 @@
 import { appointment } from './appointment';
+import { author } from './author';
+import { post } from './post';
+import { product } from './product';
 
-// If you have other schemas (like 'post', 'author', 'product'), add them here.
-// But as per the request, we are starting with appointment.
-export const schemaTypes = [appointment];
+export const schemaTypes = [appointment, author, post, product];

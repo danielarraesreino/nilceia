@@ -1,12 +1,22 @@
 import type { Metadata } from 'next';
 import BlogClient from '@/components/blog/BlogClient';
+import { getAllPosts } from '@/lib/sanity';
 
 export const metadata: Metadata = {
   title: 'Blog & Reflexões',
   description: 'Textos sobre espiritualidade, cura emocional, contos e justiça social por Nilceia Eulampio.',
+  openGraph: {
+    title: 'Blog & Reflexões — Nilceia Eulampio',
+    description: 'Textos sobre espiritualidade, cura emocional, contos e justiça social.',
+    type: 'website',
+  },
 };
 
-export default function BlogPage() {
+export const revalidate = 3600; // revalida a cada 1 hora
+
+export default async function BlogPage() {
+  const posts = await getAllPosts();
+
   return (
     <>
       {/* Page header */}
@@ -38,9 +48,9 @@ export default function BlogPage() {
         </div>
       </div>
 
-      {/* Interactive content (Client Component) */}
+      {/* Interactive content (Client Component) com dados reais do Sanity */}
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '3rem 1.5rem' }}>
-        <BlogClient />
+        <BlogClient initialPosts={posts} />
       </div>
     </>
   );

@@ -1,54 +1,36 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { PortableText } from '@portabletext/react';
 import ReadingProgress from '@/components/blog/ReadingProgress';
+import { getPostBySlug, getAllPostSlugs, urlFor } from '@/lib/sanity';
 import { formatDate } from '@/lib/utils';
+import type { PortableTextBlock } from '@/types';
 
-// Static sample — replace with `getPostBySlug(slug)` when Sanity is configured
-const SAMPLE_POST = {
-  _id: '1',
-  title: 'O silêncio que antecede a cura: uma meditação sobre o luto',
-  slug: { current: 'silencio-que-antecede-a-cura' },
-  excerpt: 'Existe um silêncio que machuca. Aquele que vem depois de uma perda e preenche cada canto da casa com a ausência de alguém. Mas existe outro silêncio — o que prepara o terreno para o novo.',
-  category: 'Cura Emocional',
-  publishedAt: '2026-04-28T00:00:00Z',
-  readingTime: 5,
-  content: `
-Existe um silêncio que machuca. Aquele que vem depois de uma perda e preenche cada canto da casa com a ausência de alguém. Um silêncio que grita. Que pesa.
-
-Mas existe outro silêncio. Aquele que antecede a cura.
-
-## O luto não é fraqueza
-
-A cultura que nos criou ensinou que chorar é sinal de fraqueza, que se mover rapidamente após uma perda é sinal de força. Mentira. Uma das mentiras mais cruéis que carregamos.
-
-O luto tem seu próprio tempo. Ele não obedece calendários, não respeita prazo de validade. Ele simplesmente *é*.
-
-> "Não há atalho para o luto. Só há o caminho através dele."
-
-## Aprender a sentar com a dor
-
-O que descobri, em anos de escuta e de estudo da alma humana, é que a dor só passa quando a encontramos de frente. Quando paramos de correr.
-
-Sentar com a dor não significa desistir. Significa honrar o que foi. Significa dizer: *você importou*.
-
-## O silêncio que prepara o terreno
-
-Depois de muito choro, chega um silêncio diferente. Mais suave. Não é ausência de dor — é presença de si mesma. É o terreno preparado para o novo.
-
-É nesse silêncio que começamos a ouvir, de novo, a nossa própria voz.
-
-E ela ainda tem muita coisa a dizer.
-  `,
-};
+export const revalidate = 3600;
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Gera as rotas estáticas para todos os posts no build
+export async function generateStaticParams() {
+  const slugs = await getAllPostSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
+
+// Metadata dinâmica com Open Graph e Twitter Card
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  // TODO: const post = await getPostBySlug(slug);
-  const post = SAMPLE_POST;
+  const post = await getPostBySlug(slug);
+
+  if (!post) {
+    return { title: 'Post não encontrado' };
+  }
+
+  const ogImage = post.imageUrl
+    ? post.imageUrl
+    : `${process.env.NEXT_PUBLIC_BASE_URL}/og-default.jpg`;
 
   return {
     title: post.title,
@@ -58,30 +40,84 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: post.excerpt,
       type: 'article',
       publishedTime: post.publishedAt,
-      authors: ['Nilceia Eulampio'],
+      authors: [post.author?.name ?? 'Nilceia Eulampio'],
       tags: [post.category],
+      images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
+      images: [ogImage],
     },
   };
 }
 
+// Componentes customizados para o Portable Text (estilo literário/poético)
+const portableTextComponents = {
+  block: {
+    normal: ({ children }: { children?: React.ReactNode }) => (
+      <p style={{ marginBottom: '1.5rem', lineHeight: 1.85 }}>{children}</p>
+    ),
+    h2: ({ children }: { children?: React.ReactNode }) => (
+      <h2 className="font-heading" style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)', margin: '2.5rem 0 1rem' }}>{children}</h2>
+    ),
+    h3: ({ children }: { children?: React.ReactNode }) => (
+      <h3 className="font-heading" style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--text-primary)', margin: '2rem 0 0.75rem' }}>{children}</h3>
+    ),
+    blockquote: ({ children }: { children?: React.ReactNode }) => (
+      <blockquote style={{
+        borderLeft: '4px solid var(--accent-gold)',
+        paddingLeft: '1.5rem',
+        margin: '2rem 0',
+        color: 'var(--text-secondary)',
+        fontStyle: 'italic',
+        fontSize: '1.1rem',
+        lineHeight: 1.8,
+      }}>{children}</blockquote>
+    ),
+  },
+  marks: {
+    strong: ({ children }: { children?: React.ReactNode }) => (
+      <strong style={{ fontWeight: 700, color: 'var(--text-primary)' }}>{children}</strong>
+    ),
+    em: ({ children }: { children?: React.ReactNode }) => (
+      <em style={{ fontStyle: 'italic', color: 'var(--accent-gold)' }}>{children}</em>
+    ),
+    link: ({ value, children }: { value?: { href: string }; children?: React.ReactNode }) => (
+      <a href={value?.href} target="_blank" rel="noopener noreferrer"
+        style={{ color: 'var(--accent-gold)', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+        {children}
+      </a>
+    ),
+  },
+  list: {
+    bullet: ({ children }: { children?: React.ReactNode }) => (
+      <ul style={{ paddingLeft: '1.5rem', marginBottom: '1.5rem', listStyleType: 'disc' }}>{children}</ul>
+    ),
+    number: ({ children }: { children?: React.ReactNode }) => (
+      <ol style={{ paddingLeft: '1.5rem', marginBottom: '1.5rem', listStyleType: 'decimal' }}>{children}</ol>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }: { children?: React.ReactNode }) => (
+      <li style={{ marginBottom: '0.5rem', lineHeight: 1.75 }}>{children}</li>
+    ),
+    number: ({ children }: { children?: React.ReactNode }) => (
+      <li style={{ marginBottom: '0.5rem', lineHeight: 1.75 }}>{children}</li>
+    ),
+  },
+};
+
 export default async function PostPage({ params }: PageProps) {
   const { slug } = await params;
-  // TODO: const post = await getPostBySlug(slug);
-  const post = SAMPLE_POST;
+  const post = await getPostBySlug(slug);
 
   if (!post) {
-    return (
-      <div style={{ paddingTop: '10rem', textAlign: 'center' }}>
-        <h1 className="font-heading" style={{ fontSize: '2rem', color: 'var(--text-primary)' }}>Post não encontrado</h1>
-        <Link href="/blog" style={{ color: 'var(--accent-gold)', marginTop: '1rem', display: 'inline-block' }}>← Voltar ao blog</Link>
-      </div>
-    );
+    notFound();
   }
+
+  const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/blog/${slug}`;
 
   return (
     <>
@@ -134,15 +170,60 @@ export default async function PostPage({ params }: PageProps) {
           <p style={{ fontSize: '1.125rem', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
             {post.excerpt}
           </p>
+
+          {/* Imagem de capa */}
+          {post.imageUrl && (
+            <div style={{ marginTop: '2.5rem', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
+              <img
+                src={post.imageUrl}
+                alt={`Imagem de capa: ${post.title}`}
+                style={{ width: '100%', maxHeight: '420px', objectFit: 'cover', display: 'block' }}
+              />
+            </div>
+          )}
         </div>
       </header>
 
-      {/* Article body */}
+      {/* Article body com Portable Text */}
       <article style={{ maxWidth: '720px', margin: '0 auto', padding: '3rem 1.5rem 6rem' }}>
-        <div
-          className="prose-nilceia"
-          dangerouslySetInnerHTML={{ __html: post.content.replace(/\n\n/g, '</p><p>').replace(/^## (.+)$/gm, '</p><h2>$1</h2><p>').replace(/> (.+)/gm, '<blockquote>$1</blockquote>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/^<\/p>/, '').replace(/<p><\/p>/g, '') }}
-        />
+        <div className="prose-nilceia">
+          {post.body && post.body.length > 0 ? (
+            <PortableText
+              value={post.body as PortableTextBlock[]}
+              components={portableTextComponents}
+            />
+          ) : (
+            <p style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>
+              Conteúdo em breve...
+            </p>
+          )}
+        </div>
+
+        {/* Autor */}
+        {post.author && (
+          <div style={{
+            marginTop: '3rem', padding: '1.5rem 2rem',
+            backgroundColor: 'var(--bg-card)',
+            borderRadius: 'var(--radius-md)',
+            border: '1px solid rgba(184,134,11,0.12)',
+            display: 'flex', alignItems: 'center', gap: '1.25rem',
+          }}>
+            {post.author.imageUrl && (
+              <img
+                src={post.author.imageUrl}
+                alt={post.author.name}
+                style={{ width: '56px', height: '56px', borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
+              />
+            )}
+            <div>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontFamily: 'var(--font-body)', marginBottom: '0.25rem' }}>Escrito por</p>
+              <p className="font-heading" style={{ fontWeight: 700, color: 'var(--text-primary)', fontSize: '1rem' }}>{post.author.name}</p>
+              {post.author.bio && (
+                <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: '0.25rem', lineHeight: 1.6 }}>{post.author.bio}</p>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Share section */}
         <div style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid rgba(184,134,11,0.15)', textAlign: 'center' }}>
@@ -151,8 +232,8 @@ export default async function PostPage({ params }: PageProps) {
           </p>
           <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             {[
-              { label: 'Compartilhar no WhatsApp', icon: '📱', color: '#25D366', href: `https://wa.me/?text=${encodeURIComponent(post.title)}` },
-              { label: 'Compartilhar no Twitter', icon: '🐦', color: '#1DA1F2', href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}` },
+              { label: 'Compartilhar no WhatsApp', icon: '📱', color: '#25D366', href: `https://wa.me/?text=${encodeURIComponent(post.title + ' ' + shareUrl)}` },
+              { label: 'Compartilhar no Twitter', icon: '🐦', color: '#1DA1F2', href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(shareUrl)}` },
             ].map((btn) => (
               <a
                 key={btn.label}
