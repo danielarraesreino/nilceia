@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const ogImage = post.imageUrl
     ? post.imageUrl
-    : `${process.env.NEXT_PUBLIC_BASE_URL}/og-default.jpg`;
+    : '/og-default.png';
 
   return {
     title: post.title,

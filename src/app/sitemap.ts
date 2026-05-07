@@ -1,18 +1,9 @@
 import type { MetadataRoute } from 'next';
-
-// TODO: Replace with getAllPostSlugs() from Sanity when configured
-const STATIC_SLUGS = [
-  'silencio-que-antecede-a-cura',
-  'menina-que-carregava-o-ceu',
-  'orar-com-o-corpo',
-  'carta-mulheres-que-dizem-nao',
-  'salario-que-a-faxineira-nunca-vai-receber',
-  'verso-para-o-mar',
-];
+import { getAllPostSlugs } from '@/lib/sanity';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://nilceia.vercel.app';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: BASE_URL, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
     { url: `${BASE_URL}/blog`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
@@ -22,12 +13,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/contato`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
   ];
 
-  const postRoutes: MetadataRoute.Sitemap = STATIC_SLUGS.map((slug) => ({
-    url: `${BASE_URL}/blog/${slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }));
+  try {
+    const slugs = await getAllPostSlugs();
+    const postRoutes: MetadataRoute.Sitemap = slugs.map((slug) => ({
+      url: `${BASE_URL}/blog/${slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    }));
 
-  return [...staticRoutes, ...postRoutes];
+    return [...staticRoutes, ...postRoutes];
+  } catch (error) {
+    console.error('Error generating sitemap:', error);
+    return staticRoutes;
+  }
 }

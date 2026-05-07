@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://nilceia.vercel.app'),
   title: {
     template: '%s | Nilceia Eulampio',
     default: 'Nilceia Eulampio — Escritora, Poetisa e Voz Espiritual',
@@ -18,11 +19,20 @@ export const metadata: Metadata = {
     siteName: 'Nilceia Eulampio',
     title: 'Nilceia Eulampio — Escritora, Poetisa e Voz Espiritual',
     description: 'Textos que tocam a alma. Reflexões sobre espiritualidade, cura emocional, contos e justiça social.',
+    images: [
+      {
+        url: '/og-default.png',
+        width: 1200,
+        height: 630,
+        alt: 'Nilceia Eulampio — Escritora e Poetisa',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Nilceia Eulampio — Escritora e Poetisa',
     description: 'Textos que tocam a alma.',
+    images: ['/og-default.png'],
   },
   robots: {
     index: true,
