@@ -9,6 +9,8 @@ const categories: PostCategory[] = [
   'Justiça Social',
   'Poesia',
   'Reflexões',
+  'Assédio Moral',
+  'Mulheres - Lutas Sociais',
 ];
 
 interface CategoryFilterProps {

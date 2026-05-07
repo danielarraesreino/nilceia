@@ -52,7 +52,9 @@ export type PostCategory =
   | 'Contos'
   | 'Justiça Social'
   | 'Poesia'
-  | 'Reflexões';
+  | 'Reflexões'
+  | 'Assédio Moral'
+  | 'Mulheres - Lutas Sociais';
 
 export type PortableTextBlock = {
   _type: string;

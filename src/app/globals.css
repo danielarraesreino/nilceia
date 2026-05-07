@@ -148,42 +148,75 @@ img {
    PROSE (conteúdo do blog)
 ─────────────────────────────────────────────── */
 .prose-nilceia {
-  max-width: 72ch;
-  color: var(--text-primary);
+  max-width: 68ch;
+  color: var(--text-secondary);
   font-family: var(--font-body);
-  font-size: 1.0625rem;
-  line-height: 1.8;
+  font-size: 1.125rem;
+  line-height: 1.85;
+  margin: 0 auto;
 }
 .prose-nilceia h2 {
   font-family: var(--font-heading);
-  font-size: 1.625rem;
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 1.875rem;
+  margin-top: 3.5rem;
+  margin-bottom: 1.25rem;
   color: var(--text-primary);
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 .prose-nilceia h3 {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
+  font-size: 1.375rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 .prose-nilceia p {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  color: var(--text-secondary);
 }
 .prose-nilceia blockquote {
-  border-left: 3px solid var(--accent-gold);
-  padding-left: 1.5rem;
-  margin: 2rem 0;
+  border-left: none;
+  padding: 2.5rem 3rem;
+  margin: 3.5rem 0;
+  background-color: var(--bg-muted);
+  border-radius: var(--radius-lg);
   font-style: italic;
-  color: var(--text-secondary);
+  color: var(--accent-gold);
   font-family: var(--font-heading);
-  font-size: 1.125rem;
+  font-size: 1.375rem;
+  line-height: 1.7;
+  text-align: center;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(184,134,11,0.05);
+}
+.prose-nilceia blockquote::before {
+  content: '“';
+  font-size: 6rem;
+  color: rgba(184, 134, 11, 0.12);
+  position: absolute;
+  top: -1.5rem;
+  left: 1rem;
+  font-family: var(--font-heading);
+  line-height: 1;
+}
+.prose-nilceia ul, .prose-nilceia ol {
+  margin-bottom: 2rem;
+  padding-left: 2rem;
+  color: var(--text-secondary);
+}
+.prose-nilceia li {
+  margin-bottom: 0.75rem;
 }
 .prose-nilceia a {
   color: var(--accent-gold);
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-decoration-color: rgba(184, 134, 11, 0.3);
+  text-underline-offset: 4px;
+  transition: all 0.2s ease;
 }
 .prose-nilceia a:hover {
   color: var(--accent-gold-light);
+  text-decoration-color: var(--accent-gold-light);
 }
