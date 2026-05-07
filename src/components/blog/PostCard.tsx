@@ -16,6 +16,8 @@ const categoryColors: Record<PostCategory, { bg: string; text: string }> = {
   'Justiça Social':   { bg: '#D4EDDA', text: '#155724' },
   'Poesia':           { bg: '#E2D9F3', text: '#4A2D8A' },
   'Reflexões':        { bg: '#FDE8D8', text: '#7A3B1E' },
+  'Assédio Moral':    { bg: '#FADBD8', text: '#7B241C' },
+  'Mulheres - Lutas Sociais': { bg: '#F3D9E8', text: '#8A2D64' },
 };
 
 export default function PostCard({ post, featured = false }: PostCardProps) {
