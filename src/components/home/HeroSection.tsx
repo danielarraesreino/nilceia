@@ -1,10 +1,11 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import React from 'react';
 import Link from 'next/link';
 
 export default function HeroSection() {
+  const shouldReduceMotion = useReducedMotion();
   return (
     <section
       aria-label="Apresentação"
@@ -162,27 +163,35 @@ export default function HeroSection() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            style={{ display: 'flex', gap: '2.5rem', marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid rgba(184,134,11,0.15)', flexWrap: 'wrap' }}
+            transition={{ delay: shouldReduceMotion ? 0 : 0.5 }}
+            style={{
+              display: 'flex',
+              gap: '2rem',
+              marginTop: '3rem',
+              paddingTop: '2rem',
+              borderTop: '1px solid rgba(184,134,11,0.15)',
+              flexWrap: 'wrap',
+              justifyContent: 'flex-start',
+            }}
           >
             {[
               { value: '200+', label: 'Reflexões publicadas' },
               { value: '5k+', label: 'Leitores mensais' },
               { value: '3', label: 'E-books publicados' },
             ].map((stat) => (
-              <div key={stat.label}>
+              <div key={stat.label} style={{ minWidth: '80px' }}>
                 <div className="font-heading" style={{ fontSize: '1.75rem', fontWeight: 700, color: 'var(--accent-gold)' }}>{stat.value}</div>
-                <div style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}>{stat.label}</div>
+                <div style={{ fontSize: '0.8125rem', color: 'var(--text-muted)', fontFamily: 'var(--font-body)', lineHeight: 1.4 }}>{stat.label}</div>
               </div>
             ))}
           </motion.div>
         </div>
 
-        {/* Visual side */}
+        {/* Visual side — Desktop */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.8, delay: shouldReduceMotion ? 0 : 0.2 }}
           style={{ position: 'relative', display: 'flex', justifyContent: 'center' }}
           className="hidden md:flex"
         >
@@ -212,7 +221,7 @@ export default function HeroSection() {
 
           {/* Floating badge */}
           <motion.div
-            animate={{ y: [0, -8, 0] }}
+            animate={shouldReduceMotion ? {} : { y: [0, -8, 0] }}
             transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
             style={{
               position: 'absolute', bottom: '2rem', left: '-2rem',
@@ -229,18 +238,106 @@ export default function HeroSection() {
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Envie sua intenção</div>
           </motion.div>
         </motion.div>
+
+        {/* Visual side — Mobile (O Danadinho do Design: nunca deixar o mobile sem alma visual!) */}
+        <motion.div
+          className="md:hidden"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: shouldReduceMotion ? 0 : 0.6, delay: shouldReduceMotion ? 0 : 0.4 }}
+          style={{
+            background: 'linear-gradient(135deg, rgba(184,134,11,0.08) 0%, rgba(107,142,111,0.05) 100%)',
+            border: '1px solid rgba(184,134,11,0.2)',
+            borderRadius: 'var(--radius-lg)',
+            padding: '2rem',
+            textAlign: 'center',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+          role="figure"
+          aria-label="Citação de Nilceia Eulampio"
+        >
+          {/* Decorative corner top-left */}
+          <div aria-hidden="true" style={{ position: 'absolute', top: 12, left: 12, width: 28, height: 28, borderTop: '2px solid var(--accent-gold)', borderLeft: '2px solid var(--accent-gold)', borderRadius: '4px 0 0 0', opacity: 0.5 }} />
+          {/* Decorative corner bottom-right */}
+          <div aria-hidden="true" style={{ position: 'absolute', bottom: 12, right: 12, width: 28, height: 28, borderBottom: '2px solid var(--accent-gold)', borderRight: '2px solid var(--accent-gold)', borderRadius: '0 0 4px 0', opacity: 0.5 }} />
+
+          <motion.div
+            animate={shouldReduceMotion ? {} : { y: [0, -6, 0] }}
+            transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
+            style={{ fontSize: '3rem', marginBottom: '1rem' }}
+            aria-hidden="true"
+          >
+            📖
+          </motion.div>
+
+          <blockquote
+            className="font-heading"
+            style={{
+              fontSize: '1.0625rem',
+              fontStyle: 'italic',
+              color: 'var(--text-secondary)',
+              lineHeight: 1.7,
+              margin: 0,
+            }}
+          >
+            &ldquo;A escrita é oração em forma de letra.&rdquo;
+          </blockquote>
+          <cite
+            style={{
+              display: 'block',
+              marginTop: '0.875rem',
+              fontSize: '0.8125rem',
+              color: 'var(--accent-gold)',
+              fontWeight: 700,
+              fontFamily: 'var(--font-body)',
+              letterSpacing: '0.04em',
+              fontStyle: 'normal',
+            }}
+          >
+            — Nilceia Eulampio
+          </cite>
+
+          {/* Mini stats row below quote */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '1.5rem',
+              marginTop: '1.5rem',
+              paddingTop: '1.25rem',
+              borderTop: '1px solid rgba(184,134,11,0.12)',
+            }}
+          >
+            {[
+              { value: '200+', label: 'textos' },
+              { value: '5k+', label: 'leitores' },
+              { value: '3', label: 'e-books' },
+            ].map((stat) => (
+              <div key={stat.label} style={{ textAlign: 'center' }}>
+                <div className="font-heading" style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--accent-gold)' }}>{stat.value}</div>
+                <div style={{ fontSize: '0.6875rem', color: 'var(--text-muted)', fontFamily: 'var(--font-body)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator — hidden on mobile to save space */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
+        transition={{ delay: shouldReduceMotion ? 0 : 1 }}
         style={{ position: 'absolute', bottom: '2rem', left: '50%', transform: 'translateX(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}
         aria-hidden="true"
+        className="hidden md:flex"
       >
         <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Explorar</span>
-        <motion.div animate={{ y: [0, 6, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} style={{ width: 1, height: 32, backgroundColor: 'var(--accent-gold)', opacity: 0.5 }} />
+        <motion.div
+          animate={shouldReduceMotion ? {} : { y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+          style={{ width: 1, height: 32, backgroundColor: 'var(--accent-gold)', opacity: 0.5 }}
+        />
       </motion.div>
     </section>
   );
