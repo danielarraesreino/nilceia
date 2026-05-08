@@ -86,7 +86,7 @@ export default function CommentsSection({ postId, initialComments }: CommentsSec
   return (
     <section className="mt-16 pt-12 border-t border-gold/10">
       <h2 className="font-heading text-2xl font-bold text-primary mb-8 flex items-center gap-2">
-        Comentários <span className="text-sm font-normal text-muted-foreground bg-gold/5 px-2 py-0.5 rounded-full">{comments.length}</span>
+        Comentários <span className="text-sm font-normal text-muted bg-gold/5 px-2 py-0.5 rounded-full">{comments.length}</span>
       </h2>
 
       {/* Caixa de Comentário */}
@@ -101,14 +101,14 @@ export default function CommentsSection({ postId, initialComments }: CommentsSec
             </div>
             <button 
               onClick={() => signOut()}
-              className="text-xs text-muted-foreground hover:text-accent-gold underline underline-offset-4"
+              className="text-xs text-muted hover:text-accent-gold underline underline-offset-4"
             >
               Sair
             </button>
           </div>
         ) : (
           <div className="mb-6">
-            <p className="text-sm text-muted-foreground mb-4">Para comentar, entre com sua rede social ou preencha os dados abaixo.</p>
+            <p className="text-sm text-muted mb-4">Para comentar, entre com sua rede social ou preencha os dados abaixo.</p>
             <div className="flex flex-wrap gap-3 mb-4">
               <button 
                 onClick={() => signIn('google')}
@@ -119,7 +119,7 @@ export default function CommentsSection({ postId, initialComments }: CommentsSec
               </button>
               <button 
                 onClick={() => signIn('facebook')}
-                className="flex items-center gap-2 px-4 py-2 bg-[#1877F2] text-white rounded-lg text-sm font-medium hover:bg-[#166fe5] transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-[#105BCC] text-white rounded-lg text-sm font-medium hover:bg-[#0E4BA8] transition-colors"
               >
                 <span className="w-4 h-4 flex items-center justify-center font-bold">f</span>
                 Entrar com Facebook
@@ -145,7 +145,7 @@ export default function CommentsSection({ postId, initialComments }: CommentsSec
                 className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-hidden"
               >
                 <div className="space-y-1">
-                  <label htmlFor="anonName" className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Seu Nome *</label>
+                  <label htmlFor="anonName" className="text-xs font-bold text-muted uppercase tracking-wider">Seu Nome *</label>
                   <input
                     id="anonName"
                     type="text"
@@ -156,7 +156,7 @@ export default function CommentsSection({ postId, initialComments }: CommentsSec
                   />
                 </div>
                 <div className="space-y-1">
-                  <label htmlFor="anonEmail" className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Seu E-mail (Opcional)</label>
+                  <label htmlFor="anonEmail" className="text-xs font-bold text-muted uppercase tracking-wider">Seu E-mail (Opcional)</label>
                   <input
                     id="anonEmail"
                     type="email"
@@ -171,7 +171,7 @@ export default function CommentsSection({ postId, initialComments }: CommentsSec
           </AnimatePresence>
 
           <div className="space-y-1">
-            <label htmlFor="commentText" className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Sua Mensagem</label>
+            <label htmlFor="commentText" className="text-xs font-bold text-muted uppercase tracking-wider">Sua Mensagem</label>
             <textarea
               id="commentText"
               value={text}
@@ -232,9 +232,9 @@ export default function CommentsSection({ postId, initialComments }: CommentsSec
                 <div className="flex items-center gap-2">
                   <h4 className="font-bold text-sm text-primary">{comment.name}</h4>
                   {comment.isAnonymous && (
-                    <span className="text-[10px] font-bold uppercase tracking-tight text-muted-foreground bg-gray-100 px-1.5 py-0.5 rounded">Visitante</span>
+                    <span className="text-[10px] font-bold uppercase tracking-tight text-muted bg-gray-100 px-1.5 py-0.5 rounded">Visitante</span>
                   )}
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-muted">
                     · {formatDate(comment.createdAt)}
                   </span>
                 </div>
@@ -245,7 +245,7 @@ export default function CommentsSection({ postId, initialComments }: CommentsSec
             </motion.div>
           ))
         ) : (
-          <p className="text-center text-muted-foreground italic py-8 border-2 border-dashed border-gold/5 rounded-xl">
+          <p className="text-center text-muted italic py-8 border-2 border-dashed border-gold/5 rounded-xl">
             Ainda não há comentários por aqui. Seja a primeira a deixar uma palavra! 💛
           </p>
         )}

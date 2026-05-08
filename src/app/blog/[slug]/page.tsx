@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import ReadingProgress from '@/components/blog/ReadingProgress';
@@ -244,13 +245,16 @@ export default async function PostPage({ params }: PageProps) {
             {post.excerpt}
           </p>
 
-          {/* Imagem de capa */}
+          {/* Imagem de capa otimizada (corrige o tempo de renderização de 4.8s) */}
           {post.imageUrl && (
-            <div style={{ marginTop: '2.5rem', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
-              <img
+            <div style={{ marginTop: '2.5rem', borderRadius: 'var(--radius-md)', overflow: 'hidden', position: 'relative', width: '100%', height: '420px' }}>
+              <Image
                 src={post.imageUrl}
                 alt={`Imagem de capa: ${post.title}`}
-                style={{ width: '100%', maxHeight: '420px', objectFit: 'cover', display: 'block' }}
+                fill
+                priority
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 768px) 100vw, 720px"
               />
             </div>
           )}
@@ -305,8 +309,8 @@ export default async function PostPage({ params }: PageProps) {
           </p>
           <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             {[
-              { label: 'Compartilhar no WhatsApp', icon: '📱', color: '#25D366', href: `https://wa.me/?text=${encodeURIComponent(post.title + ' ' + shareUrl)}` },
-              { label: 'Compartilhar no Twitter', icon: '🐦', color: '#1DA1F2', href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(shareUrl)}` },
+              { label: 'Compartilhar no WhatsApp', icon: '📱', color: '#075E54', href: `https://wa.me/?text=${encodeURIComponent(post.title + ' ' + shareUrl)}` },
+              { label: 'Compartilhar no Twitter', icon: '🐦', color: '#0C7ABF', href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(shareUrl)}` },
             ].map((btn) => (
               <a
                 key={btn.label}
