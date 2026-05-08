@@ -1,0 +1,122 @@
+# ──────────────────────────────────────────────────────────────────
+# 🚀 O Deploymaster — CI Pipeline
+# Arquivo: .github/workflows/ci.yml
+#
+# Dispara em:
+#   - Pull Requests para main ou develop
+#   - Push direto na main
+#
+# Jobs:
+#   1. test  — roda Jest com cobertura mínima de 70%
+#   2. lint  — ESLint
+#   3. build — npm run build (nunca quebrar a build)
+# ──────────────────────────────────────────────────────────────────
+
+name: CI — Testes, Lint e Build
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+# Cancela runs antigas do mesmo branch para economizar minutos do Actions
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── Job 1: Testes ─────────────────────────────────────────────────
+  test:
+    name: 🧪 Testes Jest
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Executar testes com cobertura
+        run: npm run test:coverage -- --ci --passWithNoTests
+        env:
+          # Variáveis mínimas para a build não crashar nos testes
+          NEXT_PUBLIC_SANITY_PROJECT_ID: test-project-id
+          NEXT_PUBLIC_SANITY_DATASET: production
+          NEXT_PUBLIC_BASE_URL: https://nilceia.vercel.app
+          # Resend e Sanity Write Token ficam vazios nos testes (são mockados)
+          RESEND_API_KEY: ''
+          SANITY_WRITE_TOKEN: ''
+          NEXTAUTH_SECRET: test-secret
+          NEXTAUTH_URL: http://localhost:3000
+
+      - name: Upload de cobertura (opcional — para relatórios futuros)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 7
+
+  # ── Job 2: Lint ───────────────────────────────────────────────────
+  lint:
+    name: 🔍 ESLint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Executar ESLint
+        run: npm run lint
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: test-project-id
+          NEXT_PUBLIC_SANITY_DATASET: production
+
+  # ── Job 3: Build ──────────────────────────────────────────────────
+  build:
+    name: 🏗️ Build Next.js
+    runs-on: ubuntu-latest
+    # Build só roda se testes e lint passarem
+    needs: [test, lint]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Build de produção
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: production
+          NEXT_PUBLIC_BASE_URL: https://nilceia.vercel.app
+          # Segredos reais vêm do GitHub Secrets — nunca hardcoded!
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          SANITY_WRITE_TOKEN: ${{ secrets.SANITY_WRITE_TOKEN }}
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}

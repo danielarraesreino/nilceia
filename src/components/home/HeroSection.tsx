@@ -10,7 +10,7 @@ export default function HeroSection() {
     <section
       aria-label="Apresentação"
       style={{
-        minHeight: '100vh',
+        minHeight: '100svh', /* svh = safe viewport height — resolve barra de nav do iOS Safari */
         display: 'flex',
         alignItems: 'center',
         position: 'relative',

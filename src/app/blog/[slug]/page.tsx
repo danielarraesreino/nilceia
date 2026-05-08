@@ -33,13 +33,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? post.imageUrl
     : '/og-default.png';
 
+  const canonicalUrl = `${process.env.NEXT_PUBLIC_BASE_URL || 'https://nilceia.vercel.app'}/blog/${slug}`;
+
   return {
     title: post.title,
     description: post.excerpt,
+    /* Canonical — evita conteúdo duplicado no Google (regra do Guardão do SEO) */
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: 'article',
+      url: canonicalUrl,
       publishedTime: post.publishedAt,
       authors: [post.author?.name ?? 'Nilceia Eulampio'],
       tags: [post.category],
@@ -119,10 +126,74 @@ export default async function PostPage({ params }: PageProps) {
   }
 
   const initialComments = await getCommentsForPost(post._id);
-  const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/blog/${slug}`;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://nilceia.vercel.app';
+  const postUrl = `${baseUrl}/blog/${slug}`;
+  const shareUrl = postUrl;
+
+  /* JSON-LD Structured Data — Sprint 3 SEO (O Guardão do SEO)
+   * Tipo: Article (rich result no Google) + BreadcrumbList (navegabilidade)
+   * Ref: https://developers.google.com/search/docs/appearance/structured-data/article
+   */
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    url: postUrl,
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
+    author: {
+      '@type': 'Person',
+      name: post.author?.name ?? 'Nilceia Eulampio',
+      url: `${baseUrl}/sobre`,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Nilceia Eulampio',
+      url: baseUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/og-default.png`,
+      },
+    },
+    ...(post.imageUrl && {
+      image: {
+        '@type': 'ImageObject',
+        url: post.imageUrl,
+        width: 1200,
+        height: 630,
+      },
+    }),
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': postUrl,
+    },
+    articleSection: post.category,
+    inLanguage: 'pt-BR',
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Início', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${baseUrl}/blog` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: postUrl },
+    ],
+  };
 
   return (
     <>
+      {/* JSON-LD Structured Data — injetado no <head> pelo Next.js App Router */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       <ReadingProgress />
 
       {/* Article header */}

@@ -27,11 +27,12 @@ export default function Footer() {
       aria-label="Rodapé do site"
     >
       <style>{`
-        .footer-link { color: rgba(245,239,230,0.7); font-size: 0.875rem; transition: color 0.2s; display: block; }
+        .footer-link { color: rgba(245,239,230,0.7); font-size: 0.875rem; transition: color 0.2s; display: block; padding: 0.25rem 0; min-height: 2rem; }
         .footer-link:hover { color: #FDF9F3; }
-        .footer-legal-link { font-size: 0.8125rem; color: rgba(245,239,230,0.45); transition: color 0.2s; }
+        .footer-legal-link { font-size: 0.8125rem; color: rgba(245,239,230,0.45); transition: color 0.2s; padding: 0.25rem 0; display: inline-block; }
         .footer-legal-link:hover { color: rgba(245,239,230,0.8); }
-        .footer-social { display: flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: rgba(184,134,11,0.2); font-size: 1rem; transition: background 0.2s; }
+        /* Touch target mínimo 44px — golden rule mobile */
+        .footer-social { display: flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; min-width: 44px; min-height: 44px; border-radius: 50%; background: rgba(184,134,11,0.2); font-size: 1.125rem; transition: background 0.2s; }
         .footer-social:hover { background: rgba(184,134,11,0.4); }
       `}</style>
 

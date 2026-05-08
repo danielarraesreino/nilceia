@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import BottomNav from '@/components/layout/BottomNav';
 import AuthProvider from '@/components/providers/AuthProvider';
 
 export const metadata: Metadata = {
@@ -52,8 +53,10 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         <AuthProvider>
           <Header />
-          <main id="main-content">{children}</main>
+          {/* pb-16 md:pb-0 — espaço para o BottomNav no mobile (56px + margem) */}
+          <main id="main-content" className="pb-16 md:pb-0">{children}</main>
           <Footer />
+          <BottomNav />
         </AuthProvider>
       </body>
     </html>
