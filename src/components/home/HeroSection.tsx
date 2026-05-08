@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import React from 'react';
 import Link from 'next/link';
 
 export default function HeroSection() {
@@ -37,8 +38,8 @@ export default function HeroSection() {
         </svg>
       </div>
 
-      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '4rem 1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center', width: '100%' }}
-        className="grid-cols-1 md:grid-cols-2">
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '4rem 1.5rem', alignItems: 'center', width: '100%' }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
 
         {/* Text side */}
         <div>
@@ -90,7 +91,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}
+            className="flex flex-col sm:flex-row gap-4 flex-wrap"
           >
             <Link
               href="/agenda"
@@ -105,10 +106,11 @@ export default function HeroSection() {
                 fontFamily: 'var(--font-body)',
                 boxShadow: '0 4px 16px rgba(107,142,111,0.3)',
                 transition: 'all 0.2s',
-                display: 'inline-block',
+                textAlign: 'center',
               }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 8px 24px rgba(107,142,111,0.4)'; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 4px 16px rgba(107,142,111,0.3)'; }}
+              className="block w-full sm:inline-block sm:w-auto"
+              onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 8px 24px rgba(107,142,111,0.4)'; }}
+              onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 4px 16px rgba(107,142,111,0.3)'; }}
             >
               Agendar Sessão 🗓️
             </Link>
@@ -125,10 +127,11 @@ export default function HeroSection() {
                 fontFamily: 'var(--font-body)',
                 boxShadow: '0 4px 16px rgba(184,134,11,0.3)',
                 transition: 'all 0.2s',
-                display: 'inline-block',
+                textAlign: 'center',
               }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 8px 24px rgba(184,134,11,0.4)'; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 4px 16px rgba(184,134,11,0.3)'; }}
+              className="block w-full sm:inline-block sm:w-auto"
+              onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 8px 24px rgba(184,134,11,0.4)'; }}
+              onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => { (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLAnchorElement).style.boxShadow = '0 4px 16px rgba(184,134,11,0.3)'; }}
             >
               Ler reflexões ✨
             </Link>
@@ -145,10 +148,11 @@ export default function HeroSection() {
                 fontFamily: 'var(--font-body)',
                 border: '1.5px solid rgba(44,36,27,0.2)',
                 transition: 'all 0.2s',
-                display: 'inline-block',
+                textAlign: 'center',
               }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--accent-gold)'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--accent-gold)'; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(44,36,27,0.2)'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text-primary)'; }}
+              className="block w-full sm:inline-block sm:w-auto"
+              onMouseEnter={(e: React.MouseEvent<HTMLAnchorElement>) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'var(--accent-gold)'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--accent-gold)'; }}
+              onMouseLeave={(e: React.MouseEvent<HTMLAnchorElement>) => { (e.currentTarget as HTMLAnchorElement).style.borderColor = 'rgba(44,36,27,0.2)'; (e.currentTarget as HTMLAnchorElement).style.color = 'var(--text-primary)'; }}
             >
               Conhecer a Nilceia
             </Link>

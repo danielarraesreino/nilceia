@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
 import ReadingProgress from '@/components/blog/ReadingProgress';
-import { getPostBySlug, getAllPostSlugs, urlFor } from '@/lib/sanity';
+import CommentsSection from '@/components/blog/CommentsSection';
+import { getPostBySlug, getAllPostSlugs, urlFor, getCommentsForPost } from '@/lib/sanity';
 import { formatDate } from '@/lib/utils';
 import type { PortableTextBlock } from '@/types';
 
@@ -117,6 +118,7 @@ export default async function PostPage({ params }: PageProps) {
     notFound();
   }
 
+  const initialComments = await getCommentsForPost(post._id);
   const shareUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/blog/${slug}`;
 
   return (
@@ -261,11 +263,14 @@ export default async function PostPage({ params }: PageProps) {
         </div>
 
         {/* Back link */}
-        <div style={{ marginTop: '3rem', textAlign: 'center' }}>
+        <div style={{ marginTop: '3rem', textAlign: 'center', marginBottom: '4rem' }}>
           <Link href="/blog" style={{ color: 'var(--text-muted)', fontSize: '0.875rem', fontFamily: 'var(--font-body)' }}>
             ← Ler mais reflexões
           </Link>
         </div>
+
+        {/* Seção de Comentários */}
+        <CommentsSection postId={post._id} initialComments={initialComments} />
       </article>
     </>
   );

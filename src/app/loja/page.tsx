@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { formatCurrency } from '@/lib/utils';
-import { client } from '@/lib/sanity';
+import { getAllProducts } from '@/lib/sanity';
 
 export const metadata: Metadata = {
   title: 'Livros & Infoprodutos',
@@ -10,18 +10,7 @@ export const metadata: Metadata = {
 export const revalidate = 3600; // revalidate at most every hour
 
 export default async function LojaPage() {
-  const query = `*[_type == "product"] | order(featured desc, _createdAt desc) {
-    _id,
-    title,
-    description,
-    price,
-    type,
-    checkoutUrl,
-    featured,
-    "imageUrl": imageUrl.asset->url
-  }`;
-
-  const products = await client.fetch(query);
+  const products = await getAllProducts();
 
   const typeIcons: Record<string, string> = {
     ebook: '📕',

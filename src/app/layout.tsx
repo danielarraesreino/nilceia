@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import AuthProvider from '@/components/providers/AuthProvider';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://nilceia.vercel.app'),
@@ -49,9 +50,11 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <Header />
-        <main id="main-content">{children}</main>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <main id="main-content">{children}</main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );
