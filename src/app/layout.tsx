@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import BottomNav from '@/components/layout/BottomNav';
 import AuthProvider from '@/components/providers/AuthProvider';
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://nilceia.vercel.app'),
@@ -58,6 +59,7 @@ export default function RootLayout({
           <Footer />
           <BottomNav />
         </AuthProvider>
+        <Analytics />
       </body>
     </html>
   );

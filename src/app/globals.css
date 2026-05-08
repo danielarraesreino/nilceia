@@ -14,13 +14,13 @@
   /* Tipografia */
   --text-primary:   #2C241B;
   --text-secondary: #5D4E3F;
-  --text-muted:     #9C8475;
+  --text-muted:     #735F53; /* Ajustado para contraste WCAG AA na bg-main */
 
   /* Acentos */
-  --accent-gold:    #B8860B;
-  --accent-gold-light: #D4A017;
-  --accent-green:   #6B8E6F;
-  --accent-green-light: #8FAD93;
+  --accent-gold:    #856108; /* Ajustado para contraste WCAG AA no branco */
+  --accent-gold-light: #B8860B;
+  --accent-green:   #4A6D4F; /* Ajustado para contraste WCAG AA no branco */
+  --accent-green-light: #6B8E6F;
   --accent-info:    #4A90A4;
 
   /* Sombras */

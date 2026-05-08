@@ -27,13 +27,13 @@ export default function Footer() {
       aria-label="Rodapé do site"
     >
       <style>{`
-        .footer-link { color: rgba(245,239,230,0.7); font-size: 0.875rem; transition: color 0.2s; display: block; padding: 0.25rem 0; min-height: 2rem; }
+        .footer-link { color: rgba(245,239,230,0.85); font-size: 0.875rem; transition: color 0.2s; display: block; padding: 0.25rem 0; min-height: 2rem; }
         .footer-link:hover { color: #FDF9F3; }
-        .footer-legal-link { font-size: 0.8125rem; color: rgba(245,239,230,0.45); transition: color 0.2s; padding: 0.25rem 0; display: inline-block; }
-        .footer-legal-link:hover { color: rgba(245,239,230,0.8); }
+        .footer-legal-link { font-size: 0.8125rem; color: rgba(245,239,230,0.7); transition: color 0.2s; padding: 0.25rem 0; display: inline-block; }
+        .footer-legal-link:hover { color: rgba(245,239,230,1); }
         /* Touch target mínimo 44px — golden rule mobile */
-        .footer-social { display: flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; min-width: 44px; min-height: 44px; border-radius: 50%; background: rgba(184,134,11,0.2); font-size: 1.125rem; transition: background 0.2s; }
-        .footer-social:hover { background: rgba(184,134,11,0.4); }
+        .footer-social { display: flex; align-items: center; justify-content: center; width: 2.75rem; height: 2.75rem; min-width: 44px; min-height: 44px; border-radius: 50%; background: rgba(184,134,11,0.25); font-size: 1.125rem; transition: background 0.2s; }
+        .footer-social:hover { background: rgba(184,134,11,0.5); }
       `}</style>
 
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' }}>
@@ -52,7 +52,7 @@ export default function Footer() {
           <h2 className="font-heading" style={{ fontSize: '1.75rem', color: '#FDF9F3', marginBottom: '0.5rem' }}>
             Receba reflexões toda semana 💌
           </h2>
-          <p style={{ color: 'rgba(245,239,230,0.75)', marginBottom: '1.5rem', fontSize: '0.9375rem' }}>
+          <p style={{ color: 'rgba(245,239,230,0.85)', marginBottom: '1.5rem', fontSize: '0.9375rem' }}>
             Junte-se a centenas de leitores que recebem textos que tocam a alma direto no e-mail.
           </p>
           <FooterNewsletterForm />
@@ -66,7 +66,7 @@ export default function Footer() {
             <h3 className="font-heading" style={{ fontSize: '1.375rem', color: '#FDF9F3', marginBottom: '0.75rem' }}>
               Nilceia Eulampio
             </h3>
-            <p style={{ fontSize: '0.875rem', color: 'rgba(245,239,230,0.65)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
+            <p style={{ fontSize: '0.875rem', color: 'rgba(245,239,230,0.85)', lineHeight: 1.7, marginBottom: '1.25rem' }}>
               Escritora, poetisa e comunicadora espiritual. Palavras que curam, que questionam e que aproximam.
             </p>
             <div style={{ display: 'flex', gap: '0.75rem' }}>
@@ -112,7 +112,7 @@ export default function Footer() {
             <h4 style={{ fontSize: '0.8125rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent-gold)', marginBottom: '1rem', fontFamily: 'var(--font-body)' }}>
               Uma palavra
             </h4>
-            <blockquote className="font-heading" style={{ fontSize: '1.0625rem', fontStyle: 'italic', color: 'rgba(245,239,230,0.85)', lineHeight: 1.7, margin: 0 }}>
+            <blockquote className="font-heading" style={{ fontSize: '1.0625rem', fontStyle: 'italic', color: 'rgba(245,239,230,0.95)', lineHeight: 1.7, margin: 0 }}>
               &ldquo;As palavras que guardamos dentro de nós também precisam de luz para florescer.&rdquo;
             </blockquote>
             <p style={{ fontSize: '0.8125rem', color: 'var(--accent-gold)', marginTop: '0.75rem' }}>
@@ -123,7 +123,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div style={{ borderTop: '1px solid rgba(245,239,230,0.1)', paddingTop: '1.5rem', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: '0.75rem', alignItems: 'center' }}>
-          <p style={{ fontSize: '0.8125rem', color: 'rgba(245,239,230,0.45)' }}>
+          <p style={{ fontSize: '0.8125rem', color: 'rgba(245,239,230,0.7)' }}>
             © {currentYear} Nilceia Eulampio. Todos os direitos reservados.
           </p>
           <div style={{ display: 'flex', gap: '1.5rem' }}>
