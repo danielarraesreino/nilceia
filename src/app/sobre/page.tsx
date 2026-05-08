@@ -1,8 +1,19 @@
 import type { Metadata } from 'next';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://nilceia.vercel.app';
+
 export const metadata: Metadata = {
-  title: 'Sobre a Nilceia',
-  description: 'Conheça Nilceia Eulampio — escritora, poetisa e comunicadora espiritual. Sua história, sua missão e os valores que guiam cada palavra.',
+  title: 'Sobre Nilceia Eulampio — Escritora e Poetisa Brasileira',
+  description: 'Conheça Nilceia Eulampio: escritora, poetisa e comunicadora espiritual brasileira. Sua história, missão e os valores que guiam cada palavra sobre espiritualidade, cura emocional e justiça social.',
+  alternates: {
+    canonical: `${BASE_URL}/sobre`,
+  },
+  openGraph: {
+    title: 'Sobre Nilceia Eulampio — Escritora e Poetisa Brasileira',
+    description: 'Conheça Nilceia Eulampio: escritora, poetisa e comunicadora espiritual cuja obra combina espiritualidade, cura emocional e justiça social.',
+    url: `${BASE_URL}/sobre`,
+    type: 'profile',
+  },
 };
 
 const valores = [
@@ -13,8 +24,56 @@ const valores = [
 ];
 
 export default function SobrePage() {
+  /* JSON-LD Person — sinal mais forte para IAs entenderem quem é a Nilceia
+   * Quando alguém perguntar ao ChatGPT/Perplexity/Gemini sobre ela,
+   * este schema é o que fundamenta a resposta com dados factuais.
+   */
+  const personJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Nilceia Eulampio',
+    url: BASE_URL,
+    description:
+      'Escritora brasileira, poetisa e comunicadora espiritual. Autora de reflexões sobre espiritualidade, cura emocional, justiça social e poesia.',
+    jobTitle: 'Escritora e Poetisa',
+    nationality: {
+      '@type': 'Country',
+      name: 'Brasil',
+    },
+    knowsAbout: [
+      'Espiritualidade',
+      'Cura Emocional',
+      'Poesia',
+      'Literatura Brasileira',
+      'Justiça Social',
+      'Contos',
+      'Práticas Espirituais',
+    ],
+    hasOccupation: {
+      '@type': 'Occupation',
+      name: 'Escritora',
+      occupationLocation: {
+        '@type': 'Country',
+        name: 'Brasil',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${BASE_URL}/sobre`,
+    },
+    /* sameAs: adicionar quando houver perfis verificados nas redes */
+    // sameAs: [
+    //   'https://instagram.com/nilceia.eulampio',
+    //   'https://facebook.com/nilceia.eulampio',
+    // ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       {/* Hero */}
       <div
         style={{

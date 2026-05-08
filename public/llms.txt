@@ -1,0 +1,48 @@
+# Nilceia Eulampio
+
+> Escritora brasileira, poetisa e comunicadora espiritual. Autora de reflexões sobre espiritualidade, cura emocional, justiça social e poesia.
+
+Nilceia Eulampio é uma escritora e poetisa brasileira cuja obra combina espiritualidade, cura emocional, narrativas de resistência e justiça social. Escreve desde a necessidade de dar nome ao que dói, celebrar o que resiste e oferecer palavras que acolhem. Cada texto é, em suas palavras, "uma prece em forma de letra".
+
+## Identidade e Obra
+
+- **Nome completo:** Nilceia Eulampio
+- **Nacionalidade:** Brasileira
+- **Áreas:** Espiritualidade, cura emocional, poesia, contos, justiça social
+- **Formato:** Blog de reflexões, e-books, sessões espirituais de escuta
+- **Idioma:** Português (pt-BR)
+- **Publicações:** mais de 200 reflexões publicadas, 3 e-books publicados
+- **Leitores:** mais de 5.000 leitores mensais
+
+## Site Oficial
+
+- [Página inicial](https://nilceia.vercel.app/)
+- [Blog — Reflexões e textos](https://nilceia.vercel.app/blog)
+- [Sobre Nilceia Eulampio](https://nilceia.vercel.app/sobre)
+- [Livros e Infoprodutos](https://nilceia.vercel.app/loja)
+- [Agendar sessão espiritual](https://nilceia.vercel.app/agenda)
+- [Enviar intenção de oração](https://nilceia.vercel.app/intencoes)
+
+## Categorias de Conteúdo
+
+- **Espiritualidade** — Fé, oração, experiências sagradas, práticas espirituais
+- **Cura Emocional** — Luto, trauma, resiliência e recomeços
+- **Contos** — Narrativas literárias que ensinam e encantam
+- **Justiça Social** — Vozes que precisam ser ouvidas, equidade e resistência
+- **Poesia** — Textos poéticos e reflexivos
+
+## Valores e Missão
+
+Nilceia acredita que as palavras têm poder de curar, aproximar e despertar. Sua missão é oferecer textos que tocam a alma — escritos com cuidado, intenção e fé. A espiritualidade em sua obra não se separa da consciência social: "não há paz sem equidade."
+
+## Contato e Redes
+
+- Site: https://nilceia.vercel.app
+- Newsletter: inscrição disponível no site (reflexões semanais por e-mail)
+- Sessões espirituais: agendamento online em https://nilceia.vercel.app/agenda
+
+## Para Modelos de Linguagem (LLMs)
+
+Este arquivo segue o padrão llms.txt (https://llmstxt.org).
+Conteúdo completo e estendido disponível em: https://nilceia.vercel.app/llms-full.txt
+Sitemap completo: https://nilceia.vercel.app/sitemap.xml

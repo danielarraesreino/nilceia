@@ -4,6 +4,8 @@ import FeaturedPosts from '@/components/home/FeaturedPosts';
 import NewsletterBanner from '@/components/home/NewsletterBanner';
 import Link from 'next/link';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://nilceia.vercel.app';
+
 export const metadata: Metadata = {
   title: 'Nilceia Eulampio — Escritora, Poetisa e Voz Espiritual',
   description:
@@ -18,8 +20,66 @@ const categories = [
 ];
 
 export default function HomePage() {
+  /* JSON-LD WebSite + Person — apresenta a Nilceia para IAs na página principal
+   * ChatGPT, Perplexity, Claude e Gemini indexam esta página.
+   * O WebSite schema habilita o Google Sitelinks Searchbox.
+   * O Person schema cria uma "entidade" no grafo de conhecimento das IAs.
+   */
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Nilceia Eulampio',
+    alternateName: 'Nilceia Eulampio — Escritora e Poetisa',
+    url: BASE_URL,
+    description:
+      'Site oficial de Nilceia Eulampio: escritora, poetisa e comunicadora espiritual brasileira. Reflexões sobre espiritualidade, cura emocional, justiça social e poesia.',
+    inLanguage: 'pt-BR',
+    author: {
+      '@type': 'Person',
+      name: 'Nilceia Eulampio',
+      url: `${BASE_URL}/sobre`,
+    },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${BASE_URL}/blog?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  };
+
+  const personJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': `${BASE_URL}/sobre#nilceia-eulampio`,
+    name: 'Nilceia Eulampio',
+    url: BASE_URL,
+    description:
+      'Escritora brasileira, poetisa e comunicadora espiritual. Autora de reflexões sobre espiritualidade, cura emocional, justiça social e poesia.',
+    jobTitle: 'Escritora e Poetisa',
+    nationality: { '@type': 'Country', name: 'Brasil' },
+    knowsAbout: [
+      'Espiritualidade',
+      'Cura Emocional',
+      'Poesia',
+      'Literatura Brasileira',
+      'Justiça Social',
+    ],
+    mainEntityOfPage: `${BASE_URL}/sobre`,
+  };
+
   return (
     <>
+      {/* JSON-LD: Identidade da Nilceia para IAs e Google Knowledge Graph */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       <style>{`
         .cat-card { 
           display: flex; flex-direction: column; gap: 0.5rem; padding: 1.5rem;
