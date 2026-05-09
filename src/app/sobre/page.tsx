@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://nilceia.vercel.app';
 
@@ -96,11 +97,16 @@ export default function SobrePage() {
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               boxShadow: 'var(--shadow-lg)',
               position: 'relative',
+              overflow: 'hidden',
             }}>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '4rem', marginBottom: '0.75rem' }}>✍️</div>
-                <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}>Foto da Nilceia</p>
-              </div>
+              <Image
+                src="/nilceia-sobre.png"
+                alt="Nilceia Eulampio"
+                fill
+                priority
+                style={{ objectFit: 'cover', objectPosition: '20% 30%' }}
+                sizes="320px"
+              />
             </div>
           </div>
 
