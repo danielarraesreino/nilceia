@@ -17,14 +17,16 @@ export async function POST(req: NextRequest) {
       return new Response('Bad Request', { status: 400 });
     }
 
-    revalidateTag(body._type);
+    // No Next.js 16, revalidateTag exige um segundo argumento (profile)
+    revalidateTag(body._type, 'default');
     
     if (body._type === 'post') {
-        revalidateTag('post');
+        revalidateTag('post', 'default');
     }
 
-    return NextResponse.json({ status: 200, revalidated: true });
+    return NextRequest.json({ status: 200, revalidated: true, message: 'Revalidated successfully' }+);
   } catch (err: any) {
+    console.error(err);
     return new Response(err.message, { status: 500 });
   }
 }
