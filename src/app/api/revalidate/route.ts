@@ -4,7 +4,7 @@ import { parseBody } from 'next-sanity/webhook';
 
 export async function POST(req: NextRequest) {
   try {
-    const { isValidSignature, body } = await parseBody(
+    const { isValidSignature, body } = await parseBody<any>(
       req,
       process.env.SANITY_REVALIDATE_SECRET
     );
@@ -17,16 +17,14 @@ export async function POST(req: NextRequest) {
       return new Response('Bad Request', { status: 400 });
     }
 
-    // No Next.js 16, revalidateTag exige um segundo argumento (profile)
     revalidateTag(body._type, 'default');
     
     if (body._type === 'post') {
         revalidateTag('post', 'default');
     }
 
-    return NextRequest.json({ status: 200, revalidated: true, message: 'Revalidated successfully' }+);
+    return NextResponse.json({ status: 200, revalidated: true });
   } catch (err: any) {
-    console.error(err);
     return new Response(err.message, { status: 500 });
   }
 }
