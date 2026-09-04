@@ -20,11 +20,14 @@ export default function BlogClient({ initialPosts = [] }: BlogClientProps) {
       posts = posts.filter((p) => p.category === selected);
     }
     if (search.trim()) {
-      const q = search.toLowerCase();
+      const normalize = (str: string) => 
+        str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[\u0027\u0022]/g, '');
+        
+      const q = normalize(search);
       posts = posts.filter(
         (p) =>
-          p.title.toLowerCase().includes(q) ||
-          (p.excerpt ?? '').toLowerCase().includes(q)
+          normalize(p.title).includes(q) ||
+          normalize(p.excerpt ?? '').includes(q)
       );
     }
     return posts;
