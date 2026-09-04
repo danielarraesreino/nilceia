@@ -1,5 +1,5 @@
 // src/lib/sanity.ts
-import { createClient } from '@sanity/client';
+import { createClient } from 'next-sanity';
 import { createImageUrlBuilder } from '@sanity/image-url';
 
 export const client = createClient({
@@ -31,7 +31,7 @@ export async function getAllPosts() {
         audioUrl,
         author->{ _id, name, "imageUrl": image.asset->url }
       }
-    `);
+    `, {}, { next: { tags: ['post'] } });
   } catch (err) {
     console.error("Sanity fetch error (getAllPosts):", err);
     return [];
@@ -112,8 +112,7 @@ export async function getAllProducts() {
         type,
         "imageUrl": image.asset->url,
         checkoutUrl,
-        featured,
-        testimonials
+        featured
       }
     `);
   } catch (err) {
