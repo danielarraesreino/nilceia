@@ -11,8 +11,8 @@ function cleanEnv(val: string | undefined): string | undefined {
 export default defineConfig({
   name: 'default',
   title: 'Nilceia Studio',
-  projectId: cleanEnv(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) as string,
-  dataset: cleanEnv(process.env.NEXT_PUBLIC_SANITY_DATASET) || 'production',
+  projectId: 'qf5spdw9',
+  dataset: 'production',
   basePath: '/studio',
   plugins: [
     structureTool(),

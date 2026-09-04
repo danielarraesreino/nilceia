@@ -8,8 +8,8 @@ function cleanEnv(val: string | undefined): string | undefined {
 }
 
 export const client = createClient({
-  projectId: cleanEnv(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) ?? 'your-project-id',
-  dataset: cleanEnv(process.env.NEXT_PUBLIC_SANITY_DATASET) ?? 'production',
+  projectId: 'qf5spdw9',
+  dataset: 'production',
   apiVersion: '2024-01-01',
   useCdn: process.env.NODE_ENV === 'production',
 });
