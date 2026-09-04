@@ -6,8 +6,14 @@ import BottomNav from '@/components/layout/BottomNav';
 import AuthProvider from '@/components/providers/AuthProvider';
 import { Analytics } from '@vercel/analytics/react';
 
+const getCleanBaseUrl = () => {
+  const rawUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://nilceia.vercel.app';
+  const cleanUrl = rawUrl.split('\n').find(line => line.trim().startsWith('http')) || 'https://nilceia.vercel.app';
+  return cleanUrl.trim();
+};
+
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'https://nilceia.vercel.app'),
+  metadataBase: new URL(getCleanBaseUrl()),
   title: {
     template: '%s | Nilceia Eulampio',
     default: 'Nilceia Eulampio — Escritora, Poetisa e Voz Espiritual',
