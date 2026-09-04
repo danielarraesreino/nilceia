@@ -9,14 +9,7 @@ export default function HeroSection() {
   return (
     <section
       aria-label="Apresentação"
-      style={{
-        minHeight: '100svh', /* svh = safe viewport height — resolve barra de nav do iOS Safari */
-        display: 'flex',
-        alignItems: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-        paddingTop: '4.5rem',
-      }}
+      className="pt-28 pb-24 md:pt-32 md:pb-20 min-h-[100svh] flex flex-col justify-center relative overflow-x-hidden"
     >
       {/* Background decorative elements */}
       <div aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
