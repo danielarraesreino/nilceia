@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import type { Post, PostCategory } from '@/types';
 import { formatDateShort } from '@/lib/utils';
+import { getFallbackBlogImage } from '@/lib/blog-visuals';
 
 interface PostCardProps {
   post: Pick<Post, '_id' | 'title' | 'slug' | 'excerpt' | 'category' | 'publishedAt' | 'imageUrl' | 'audioUrl' | 'readingTime'>;
@@ -23,6 +24,7 @@ const categoryColors: Record<PostCategory, { bg: string; text: string }> = {
 export default function PostCard({ post, featured = false }: PostCardProps) {
   const { title, slug, excerpt, category, publishedAt, imageUrl, audioUrl, readingTime } = post;
   const catStyle = categoryColors[category as PostCategory] ?? { bg: '#F5EFE6', text: '#5D4E3F' };
+  const resolvedImageUrl = imageUrl || getFallbackBlogImage(category, title);
 
   return (
     <article
@@ -49,23 +51,20 @@ export default function PostCard({ post, featured = false }: PostCardProps) {
       }}
     >
       {/* Image */}
-      {imageUrl && (
-        <Link href={`/blog/${slug.current}`} tabIndex={-1} aria-hidden="true">
-          <div style={{ height: featured ? '14rem' : '11rem', overflow: 'hidden', position: 'relative' }}>
-            <img
-              src={imageUrl}
-              alt={title}
-              loading="lazy"
-              decoding="async"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.05)'; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)'; }}
-            />
-            {/* Gradient overlay */}
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%', background: 'linear-gradient(to top, rgba(44,36,27,0.3), transparent)' }} />
-          </div>
-        </Link>
-      )}
+      <Link href={`/blog/${slug.current}`} tabIndex={-1} aria-hidden="true">
+        <div style={{ height: featured ? '14rem' : '11rem', overflow: 'hidden', position: 'relative' }}>
+          <img
+            src={resolvedImageUrl}
+            alt={title}
+            loading="lazy"
+            decoding="async"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s ease' }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.05)'; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)'; }}
+          />
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%', background: 'linear-gradient(to top, rgba(44,36,27,0.3), transparent)' }} />
+        </div>
+      </Link>
 
       {/* Content */}
       <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>

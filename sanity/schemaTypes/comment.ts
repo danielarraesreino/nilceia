@@ -1,3 +1,5 @@
+import type { Rule } from 'sanity';
+
 export const comment = {
   name: 'comment',
   title: 'Comentário',
@@ -7,7 +9,7 @@ export const comment = {
       name: 'name',
       title: 'Nome',
       type: 'string',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'email',
@@ -19,14 +21,14 @@ export const comment = {
       name: 'text',
       title: 'Comentário',
       type: 'text',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'post',
       title: 'Postagem',
       type: 'reference',
       to: { type: 'post' },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'approved',
@@ -61,7 +63,7 @@ export const comment = {
       post: 'post.title',
       approved: 'approved',
     },
-    prepare({ name, comment, post, approved }: any) {
+    prepare({ name, comment, post, approved }: { name?: string; comment?: string; post?: string; approved?: boolean }) {
       return {
         title: `${name} em "${post || 'Desconhecido'}"`,
         subtitle: `${approved ? '✅ Aprovado' : '⏳ Pendente'} - ${comment}`,

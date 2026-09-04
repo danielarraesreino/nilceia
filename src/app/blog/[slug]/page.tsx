@@ -7,6 +7,7 @@ import ReadingProgress from '@/components/blog/ReadingProgress';
 import CommentsSection from '@/components/blog/CommentsSection';
 import { getPostBySlug, getAllPostSlugs, urlFor, getCommentsForPost } from '@/lib/sanity';
 import { formatDate } from '@/lib/utils';
+import { getFallbackBlogImage } from '@/lib/blog-visuals';
 import type { PortableTextBlock } from '@/types';
 
 export const revalidate = 3600;
@@ -130,6 +131,7 @@ export default async function PostPage({ params }: PageProps) {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://nilceia.vercel.app';
   const postUrl = `${baseUrl}/blog/${slug}`;
   const shareUrl = postUrl;
+  const heroImage = post.imageUrl || getFallbackBlogImage(post.category, post.title);
 
   /* JSON-LD Structured Data — Sprint 3 SEO (O Guardão do SEO)
    * Tipo: Article (rich result no Google) + BreadcrumbList (navegabilidade)
@@ -245,19 +247,17 @@ export default async function PostPage({ params }: PageProps) {
             {post.excerpt}
           </p>
 
-          {/* Imagem de capa otimizada (corrige o tempo de renderização de 4.8s) */}
-          {post.imageUrl && (
-            <div style={{ marginTop: '2.5rem', borderRadius: 'var(--radius-md)', overflow: 'hidden', position: 'relative', width: '100%', height: '420px' }}>
-              <Image
-                src={post.imageUrl}
-                alt={`Imagem de capa: ${post.title}`}
-                fill
-                priority
-                style={{ objectFit: 'cover' }}
-                sizes="(max-width: 768px) 100vw, 720px"
-              />
-            </div>
-          )}
+          {/* Imagem de capa otimizada com fallback editorial */}
+          <div style={{ marginTop: '2.5rem', borderRadius: 'var(--radius-md)', overflow: 'hidden', position: 'relative', width: '100%', height: '420px' }}>
+            <Image
+              src={heroImage}
+              alt={`Imagem de capa: ${post.title}`}
+              fill
+              priority
+              style={{ objectFit: 'cover' }}
+              sizes="(max-width: 768px) 100vw, 720px"
+            />
+          </div>
         </div>
       </header>
 

@@ -1,3 +1,6 @@
+import type { Rule } from 'sanity';
+import type { ReactNode } from 'react';
+
 export const post = {
   name: 'post',
   title: 'Postagem (Blog)',
@@ -7,7 +10,7 @@ export const post = {
       name: 'title',
       title: 'Título',
       type: 'string',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'slug',
@@ -17,7 +20,7 @@ export const post = {
         source: 'title',
         maxLength: 96,
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'author',
@@ -42,20 +45,26 @@ export const post = {
           { title: 'Reflexões', value: 'Reflexões' },
         ],
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'excerpt',
       title: 'Resumo (Para Buscadores/Google)',
       type: 'text',
       description: 'Aparece nos cartões do blog e nos resultados do Google.',
-      validation: (Rule: any) => Rule.required().max(200),
+      validation: (Rule: Rule) => Rule.required().max(200),
     },
     {
       name: 'mainImage',
       title: 'Imagem de Capa',
       type: 'image',
       options: { hotspot: true },
+    },
+    {
+      name: 'audioUrl',
+      title: 'Áudio (URL)',
+      type: 'url',
+      description: 'Link opcional para uma versão em áudio da postagem.',
     },
     {
       name: 'readingTime',
@@ -104,7 +113,7 @@ export const post = {
                     name: 'href',
                     type: 'url',
                     title: 'URL',
-                    validation: (Rule: any) =>
+                    validation: (Rule: Rule) =>
                       Rule.uri({ allowRelative: true, scheme: ['http', 'https', 'mailto'] }),
                   },
                   {
@@ -127,7 +136,7 @@ export const post = {
               name: 'alt',
               type: 'string',
               title: 'Texto alternativo (acessibilidade)',
-              validation: (Rule: any) => Rule.required(),
+              validation: (Rule: Rule) => Rule.required(),
             },
             {
               name: 'caption',
@@ -146,18 +155,18 @@ export const post = {
               type: 'url',
               title: 'URL do YouTube',
               description: 'Cole o link do vídeo (ex: https://www.youtube.com/watch?v=...)',
-              validation: (Rule: any) => Rule.required(),
+              validation: (Rule: Rule) => Rule.required(),
             },
           ],
           preview: {
             select: { url: 'url' },
-            prepare({ url }: any) {
+            prepare({ url }: { url?: string }) {
               return { title: '▶ YouTube', subtitle: url };
             },
           },
         },
       ],
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
   ],
   preview: {
@@ -166,7 +175,7 @@ export const post = {
       author: 'author.name',
       media: 'mainImage',
     },
-    prepare(selection: any) {
+    prepare(selection: { title?: string; author?: string; media?: ReactNode }) {
       const { author } = selection;
       return Object.assign({}, selection, {
         subtitle: author && `por ${author}`,

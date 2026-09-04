@@ -98,16 +98,17 @@ describe('PostCard', () => {
 
   // ── Imagem ───────────────────────────────────────────────────────────────
 
-  it('não renderiza imagem quando imageUrl está ausente', () => {
+  it('renderiza uma imagem editorial de fallback quando imageUrl está ausente', () => {
     render(<PostCard post={basePost} />);
-    expect(screen.queryByRole('img')).not.toBeInTheDocument();
+    const img = document.querySelector('img');
+    expect(img).toBeInTheDocument();
+    expect(img).toHaveAttribute('alt', 'O silêncio que antecede a cura');
+    expect(img?.getAttribute('src')).toContain('data:image/svg+xml');
   });
 
   it('renderiza imagem com alt quando imageUrl está presente', () => {
     const post = { ...basePost, imageUrl: 'https://example.com/image.jpg' };
     const { container } = render(<PostCard post={post} />);
-    // A imagem está dentro de um link com aria-hidden="true",
-    // então usamos querySelector para acessar o DOM diretamente
     const img = container.querySelector('img');
     expect(img).toBeInTheDocument();
     expect(img).toHaveAttribute('alt', 'O silêncio que antecede a cura');

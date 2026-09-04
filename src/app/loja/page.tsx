@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { formatCurrency } from '@/lib/utils';
 import { getAllProducts } from '@/lib/sanity';
+import type { Product } from '@/types';
 
 export const metadata: Metadata = {
   title: 'Livros & Infoprodutos',
@@ -64,7 +65,7 @@ export default async function LojaPage() {
            </div>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-            {products.map((p: any) => (
+            {products.map((p: Product) => (
               <article
                 key={p._id}
                 style={{

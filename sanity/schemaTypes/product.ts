@@ -1,3 +1,5 @@
+import type { Rule } from 'sanity';
+
 export const product = {
   name: 'product',
   title: 'Produto (Loja)',
@@ -7,19 +9,19 @@ export const product = {
       name: 'title',
       title: 'Título do Produto',
       type: 'string',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'description',
       title: 'Descrição Curta',
       type: 'text',
-      validation: (Rule: any) => Rule.required().max(200),
+      validation: (Rule: Rule) => Rule.required().max(200),
     },
     {
       name: 'price',
       title: 'Preço (R$)',
       type: 'number',
-      validation: (Rule: any) => Rule.required().min(0),
+      validation: (Rule: Rule) => Rule.required().min(0),
     },
     {
       name: 'type',
@@ -33,16 +35,16 @@ export const product = {
           { title: 'Outro', value: 'other' },
         ],
       },
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
       name: 'checkoutUrl',
       title: 'Link de Venda (Hotmart, Kiwify, etc)',
       type: 'url',
-      validation: (Rule: any) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     },
     {
-      name: 'imageUrl',
+      name: 'image',
       title: 'Capa / Imagem do Produto',
       type: 'image',
       options: { hotspot: true },

@@ -10,13 +10,16 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "migrate:dry": "ts-node --project tsconfig.scripts.json scripts/migrate-blogspot.ts --dry-run",
-    "migrate:run": "ts-node --project tsconfig.scripts.json scripts/migrate-blogspot.ts"
+    "migrate:run": "ts-node --project tsconfig.scripts.json scripts/migrate-blogspot.ts",
+    "blogspot:images:dry": "ts-node --project tsconfig.scripts.json scripts/fetch-original-blogspot-images.ts --dry-run",
+    "blogspot:images": "ts-node --project tsconfig.scripts.json scripts/fetch-original-blogspot-images.ts"
   },
   "dependencies": {
     "@portabletext/react": "^6.2.0",
     "@sanity/client": "^7.23.0",
     "@sanity/image-url": "^2.1.1",
-    "@sanity/vision": "^6.1.0",
+    "@sanity/vision": "^5.31.1",
+    "@tailwindcss/oxide-linux-x64-gnu": "^4.3.3",
     "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
@@ -54,5 +57,8 @@
     "ts-jest": "^29.4.9",
     "ts-node": "^10.9.2",
     "typescript": "^5"
+  },
+  "optionalDependencies": {
+    "@tailwindcss/oxide-linux-x64-gnu": "^4.3.3"
   }
 }
