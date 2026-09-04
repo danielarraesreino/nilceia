@@ -3,6 +3,8 @@ import HeroSection from '@/components/home/HeroSection';
 import FeaturedPosts from '@/components/home/FeaturedPosts';
 import NewsletterBanner from '@/components/home/NewsletterBanner';
 import Link from 'next/link';
+import { client } from '@/lib/sanity';
+import type { Post } from '@/types';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://nilceia.vercel.app';
 
@@ -19,7 +21,25 @@ const categories = [
   { icon: '✊', label: 'Justiça Social', href: '/blog?cat=Justiça+Social', desc: 'Vozes que precisam ser ouvidas' },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const latestPosts: Post[] = await client.fetch(`
+    *[_type == "post"] | order(publishedAt desc)[0...3] {
+      _id,
+      title,
+      slug,
+      excerpt,
+      "category": categories[0]->title,
+      publishedAt,
+      audioUrl,
+      mainImage {
+        asset->{
+          _id,
+          url
+        }
+      }
+    }
+  `);
+
   /* JSON-LD WebSite + Person — apresenta a Nilceia para IAs na página principal
    * ChatGPT, Perplexity, Claude e Gemini indexam esta página.
    * O WebSite schema habilita o Google Sitelinks Searchbox.
