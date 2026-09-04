@@ -46,3 +46,9 @@ next-env.d.ts
 /.swarm/
 ruvector.db
 *.db
+venv/
+venv/
+projeto dialogos json oauth google.json
+*.deb
+*.txt
+*.wav

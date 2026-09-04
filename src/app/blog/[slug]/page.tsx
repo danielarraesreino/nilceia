@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { PortableText } from '@portabletext/react';
+import AudioPlayer from '@/components/blog/AudioPlayer';
 import ReadingProgress from '@/components/blog/ReadingProgress';
 import CommentsSection from '@/components/blog/CommentsSection';
 import { getPostBySlug, getAllPostSlugs, urlFor, getCommentsForPost } from '@/lib/sanity';
@@ -263,6 +264,10 @@ export default async function PostPage({ params }: PageProps) {
 
       {/* Article body com Portable Text */}
       <article style={{ maxWidth: '720px', margin: '0 auto', padding: '3rem 1.5rem 6rem' }}>
+        {post.audioUrl && (
+          <AudioPlayer src={post.audioUrl} />
+        )}
+
         <div className="prose-nilceia">
           {post.body && post.body.length > 0 ? (
             <PortableText

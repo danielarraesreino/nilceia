@@ -15,15 +15,17 @@
     "blogspot:images": "ts-node --project tsconfig.scripts.json scripts/fetch-original-blogspot-images.ts"
   },
   "dependencies": {
+    "@portabletext/block-tools": "^6.0.0",
     "@portabletext/react": "^6.2.0",
-    "@sanity/client": "^7.23.0",
+    "@sanity/block-tools": "^3.70.0",
+    "@sanity/client": "^7.27.0",
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^5.31.1",
-    "@tailwindcss/oxide-linux-x64-gnu": "^4.3.3",
     "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.38.0",
+    "jsdom": "^30.0.1",
     "lucide-react": "^1.14.0",
     "next": "^16.2.9",
     "next-auth": "^4.24.14",
@@ -35,6 +37,7 @@
     "sanity-plugin-media": "^4.3.5",
     "styled-components": "^6.4.2",
     "tailwind-merge": "^3.5.0",
+    "xml2js": "^0.6.2",
     "zod": "^4.4.3"
   },
   "devDependencies": {
