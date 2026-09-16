@@ -48,6 +48,10 @@ ruvector.db
 *.db
 venv/
 venv/
+# Documentação Viva interna e dados locais protegidos (repo público)
+/DOCUMENTAÇÃO VIVA/
+DOCUMENTAÇÃO VIVA/
+raw_whatsapp_baileys/
 projeto dialogos json oauth google.json
 *.deb
 *.txt
