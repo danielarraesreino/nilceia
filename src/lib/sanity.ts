@@ -117,7 +117,8 @@ export async function getAllProducts() {
         type,
         "imageUrl": image.asset->url,
         checkoutUrl,
-        featured
+        featured,
+        author->{ _id, name, "imageUrl": image.asset->url }
       }
     `);
   } catch (err) {

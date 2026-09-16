@@ -30,6 +30,7 @@ export interface Product {
   imageUrl?: string;
   checkoutUrl: string;
   featured?: boolean;
+  author?: Author;
   testimonials?: Testimonial[];
 }
 

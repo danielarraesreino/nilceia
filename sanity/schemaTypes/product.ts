@@ -12,6 +12,13 @@ export const product = {
       validation: (Rule: Rule) => Rule.required(),
     },
     {
+      name: 'author',
+      title: 'Autor(a)',
+      type: 'reference',
+      to: [{ type: 'author' }],
+      description: 'Quem é o(a) autor(a) deste e-book/produto? (Nilceia, Alessandro Poeta ou ambos)',
+    },
+    {
       name: 'description',
       title: 'Descrição Curta',
       type: 'text',

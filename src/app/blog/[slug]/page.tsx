@@ -307,8 +307,60 @@ export default async function PostPage({ params }: PageProps) {
           </div>
         )}
 
+        {/* Bloco de Conversão: Diálogos & E-books (nilceia-monetization) */}
+        <div style={{
+          marginTop: '3.5rem',
+          padding: '2rem 1.75rem',
+          borderRadius: 'var(--radius-md)',
+          background: 'linear-gradient(135deg, rgba(184,134,11,0.08) 0%, rgba(107,142,111,0.06) 100%)',
+          border: '1.5px solid rgba(184,134,11,0.22)',
+          textAlign: 'center',
+        }}>
+          <span style={{ fontSize: '1.75rem', display: 'inline-block', marginBottom: '0.5rem' }} aria-hidden="true">🌱</span>
+          <h3 className="font-heading" style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.5rem' }}>
+            Aprofunde sua jornada no Portal Diálogos
+          </h3>
+          <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.7, maxWidth: '52ch', margin: '0 auto 1.5rem' }}>
+            Reflexões contínuas, intenções de oração e e-books exclusivos de Nilceia Eulampio e Alessandro Poeta para nutrir a alma.
+          </p>
+          <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <Link
+              href="/loja"
+              style={{
+                padding: '0.625rem 1.5rem',
+                backgroundColor: 'var(--accent-gold)',
+                color: '#fff',
+                borderRadius: 'var(--radius-sm)',
+                fontWeight: 700,
+                fontSize: '0.9rem',
+                fontFamily: 'var(--font-body)',
+                textDecoration: 'none',
+                boxShadow: '0 2px 10px rgba(184,134,11,0.25)',
+              }}
+            >
+              Conhecer E-books 📕
+            </Link>
+            <Link
+              href="/intencoes"
+              style={{
+                padding: '0.625rem 1.5rem',
+                backgroundColor: 'transparent',
+                color: 'var(--accent-green)',
+                borderRadius: 'var(--radius-sm)',
+                fontWeight: 700,
+                fontSize: '0.9rem',
+                fontFamily: 'var(--font-body)',
+                border: '1.5px solid var(--accent-green)',
+                textDecoration: 'none',
+              }}
+            >
+              Pedir Oração 🙏
+            </Link>
+          </div>
+        </div>
+
         {/* Share section */}
-        <div style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid rgba(184,134,11,0.15)', textAlign: 'center' }}>
+        <div style={{ marginTop: '3.5rem', paddingTop: '2rem', borderTop: '1px solid rgba(184,134,11,0.15)', textAlign: 'center' }}>
           <p className="font-heading" style={{ fontSize: '1.125rem', color: 'var(--text-secondary)', marginBottom: '1.25rem', fontStyle: 'italic' }}>
             Este texto tocou seu coração? Compartilhe com alguém. 💛
           </p>

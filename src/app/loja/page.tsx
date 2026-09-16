@@ -99,9 +99,16 @@ export default async function LojaPage() {
 
                 <div style={{ padding: '2rem', flex: 1 }}>
                   {!p.imageUrl && <div style={{ fontSize: '3rem', marginBottom: '1rem' }} aria-hidden="true">{typeIcons[p.type] || '🎁'}</div>}
-                  <span style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'var(--font-body)' }}>
-                    {getTypeLabel(p.type)}
-                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--accent-gold)', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', fontFamily: 'var(--font-body)' }}>
+                      {getTypeLabel(p.type)}
+                    </span>
+                    {p.author && (
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}>
+                        por <strong>{p.author.name}</strong>
+                      </span>
+                    )}
+                  </div>
                   <h3 className="font-heading" style={{ fontSize: '1.25rem', fontWeight: 700, color: 'var(--text-primary)', margin: '0.5rem 0 0.75rem' }}>
                     {p.title}
                   </h3>
