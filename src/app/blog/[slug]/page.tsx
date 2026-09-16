@@ -118,6 +118,35 @@ const portableTextComponents = {
       <li style={{ marginBottom: '0.5rem', lineHeight: 1.75 }}>{children}</li>
     ),
   },
+  types: {
+    youtube: ({ value }: { value?: { url?: string } }) => {
+      if (!value?.url) return null;
+      const match = value.url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+      const videoId = match ? match[1] : null;
+      if (!videoId) return null;
+      return (
+        <div
+          style={{
+            margin: '2.5rem 0',
+            borderRadius: 'var(--radius-md)',
+            overflow: 'hidden',
+            aspectRatio: '16/9',
+            width: '100%',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+            border: '1px solid rgba(184,134,11,0.15)',
+          }}
+        >
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+            title="Vídeo do YouTube"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            style={{ width: '100%', height: '100%', border: 0 }}
+          />
+        </div>
+      );
+    },
+  },
 };
 
 export default async function PostPage({ params }: PageProps) {

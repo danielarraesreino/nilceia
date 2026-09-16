@@ -6,7 +6,7 @@ import { formatDateShort } from '@/lib/utils';
 import { getFallbackBlogImage } from '@/lib/blog-visuals';
 
 interface PostCardProps {
-  post: Pick<Post, '_id' | 'title' | 'slug' | 'excerpt' | 'category' | 'publishedAt' | 'imageUrl' | 'audioUrl' | 'readingTime'>;
+  post: Pick<Post, '_id' | 'title' | 'slug' | 'excerpt' | 'category' | 'publishedAt' | 'imageUrl' | 'audioUrl' | 'readingTime' | 'author'>;
   featured?: boolean;
 }
 
@@ -22,7 +22,7 @@ const categoryColors: Record<PostCategory, { bg: string; text: string }> = {
 };
 
 export default function PostCard({ post, featured = false }: PostCardProps) {
-  const { title, slug, excerpt, category, publishedAt, imageUrl, audioUrl, readingTime } = post;
+  const { title, slug, excerpt, category, publishedAt, imageUrl, audioUrl, readingTime, author } = post;
   const catStyle = categoryColors[category as PostCategory] ?? { bg: '#F5EFE6', text: '#5D4E3F' };
   const resolvedImageUrl = imageUrl || getFallbackBlogImage(category, title);
 
@@ -103,6 +103,12 @@ export default function PostCard({ post, featured = false }: PostCardProps) {
           {audioUrl && (
             <span style={{ fontSize: '0.78rem', color: 'var(--accent-green)', fontFamily: 'var(--font-body)' }}>
               🎧 áudio
+            </span>
+          )}
+
+          {author?.name && (
+            <span style={{ fontSize: '0.78rem', color: 'var(--accent-gold)', fontWeight: 600, fontFamily: 'var(--font-body)' }}>
+              · por {author.name}
             </span>
           )}
         </div>
